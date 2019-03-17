@@ -1,0 +1,41 @@
+<form [formGroup]="ticketForm" class="tickets-form" (submit)="addTicket(); form.resetForm();" #form="ngForm">
+  <h2>Добавление билетов</h2>
+
+  <p>Время вылета должно быть меньше времени прилета с учетом часового пояса</p>
+
+  <mat-form-field class="tickets-form__field">
+    <input matInput placeholder="Город вылета" formControlName="cityFrom" [matAutocomplete]="auto1" (change)="onCheckTimes()">
+    <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayCity">
+      <mat-option *ngFor="let city of filteredCitiesFrom$ | async" [value]="city">
+        <span>{{ city.name }}</span>
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="ticketForm.controls.cityFrom.errors?.required">Обязательное поле</mat-error>
+    <mat-error *ngIf="ticketForm.controls.cityFrom.errors?.match">Не выбрано поле</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="tickets-form__field">
+    <input type="time" matInput placeholder="Время вылета (местное время)" formControlName="timeFrom" (change)="onCheckTimes()">
+    <mat-error *ngIf="ticketForm.controls.timeFrom.errors?.required">Обязательное поле</mat-error>
+    <mat-error *ngIf="ticketForm.controls.timeFrom.errors?.rangeTime">Время вылета больше времени прилета</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="tickets-form__field">
+    <input matInput placeholder="Город прилета" formControlName="cityTo" [matAutocomplete]="auto2" (change)="onCheckTimes()">
+    <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayCity">
+      <mat-option *ngFor="let city of filteredCitiesTo$ | async" [value]="city">
+        <span>{{ city.name }}</span>
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="ticketForm.controls.cityTo.errors?.required">Обязательное поле</mat-error>
+    <mat-error *ngIf="ticketForm.controls.cityTo.errors?.match">Не выбрано поле</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="tickets-form__field">
+    <input type="time" matInput placeholder="Время прилета (местное время)" formControlName="timeTo" (change)="onCheckTimes()">
+    <mat-error *ngIf="ticketForm.controls.timeTo.errors?.required">Обязательное поле</mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button type="submit" [disabled]="!ticketForm.valid">Добавить билет</button>
+  <button mat-raised-button type="reset">Очистить</button>
+</form>

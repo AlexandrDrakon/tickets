@@ -1,0 +1,15 @@
+<div class="routes-list">
+    <h2>Список маршрутов</h2>
+
+    <p *ngIf="!(pathList$ | async).length">Нет маршрутов</p>
+
+    <mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let path of pathList$ | async">
+        <span *ngFor="let ticket of path; first as isFirst">
+          <span *ngIf="isFirst">{{ ticket.cityFrom }}</span>
+          <span> --> </span>
+          <span>{{ ticket.cityTo }}</span>
+        </span>
+      </mat-list-item>
+    </mat-list>
+</div>

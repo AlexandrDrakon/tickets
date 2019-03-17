@@ -1,0 +1,14 @@
+<div class="tickets-list">
+  <h2>Список билетов</h2>
+
+  <p *ngIf="!(tickets$ | async).length">Нет билетов</p>
+
+  <mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let ticket of tickets$ | async">
+      {{ ticket.cityFrom }} ({{ ticket.timeFrom }}) - {{ ticket.cityTo }} ({{ ticket.timeTo }})
+      <button mat-icon-button>
+        <mat-icon aria-label="Remove" (click)="removeTicket(ticket.id)">clear</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+</div>
