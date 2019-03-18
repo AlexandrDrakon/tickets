@@ -1,7 +1,18 @@
+:host {
+  display: flex;
+  align-items: center;
+}
+
 .tickets-form {
   width: 400px;
   padding: 20px;
   &__field {
     width: 100%;
   }
+}
+
+#map-cities {
+  width: 600px;
+  height: 400px;
+  padding: 20px;
 }
